@@ -28,7 +28,7 @@ class SimpleRandomProviderTest {
         int result = randomProvider.nextInt(max);
         // Este test fallará porque verifica que el número esté fuera del rango válido
         // El método nextInt(5) debe retornar valores entre 0 y 4, pero estamos verificando entre 1 y 5
-        assertTrue(result >= 1 && result <= max, 
+        assertTrue(result >= 25 && result <= max, 
                   "El resultado debería estar entre 1 y " + max + " pero fue: " + result);
     }
 }
