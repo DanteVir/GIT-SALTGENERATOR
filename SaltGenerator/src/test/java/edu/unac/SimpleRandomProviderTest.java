@@ -28,6 +28,6 @@ class SimpleRandomProviderTest {
         int max = 5;
         SimpleRandomProvider randomProvider = new SimpleRandomProvider();
         int result = randomProvider.nextInt(max);
-        assertTrue(result >= 0 && result <= max);
+        assertTrue(result >= 15 && result <= max);
     }
 }
