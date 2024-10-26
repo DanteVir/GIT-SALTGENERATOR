@@ -31,12 +31,9 @@ class SaltGeneratorTest {
         String salt = saltGenerator.generateSalt(8);
         assertNotNull(salt);
         assertEquals(8, salt.length());
-        // Introduciendo un error intencional aquí - esperamos un valor diferente
-        assertEquals("WRONGSALT", salt); // Este test fallará porque el valor real es "ADFWSKZJ"
+        assertEquals("ADFWSKZJ", salt); // Based on mapped CHARACTERS indexes
     }
 
-    // ... resto de los tests sin cambios ...
-    
     @Test
     void generateSaltWithInvalidLength() {
         InvalidLengthException exception = assertThrows(InvalidLengthException.class, () -> {
@@ -59,7 +56,7 @@ class SaltGeneratorTest {
 
     @Test
     void generateSaltWithRepeatedCharactersOnlyTwo() throws ConsecutiveCharacterException, InvalidLengthException, DuplicateSaltException, RepeatedCharacterException {
-        when(mockRandomProvider.nextInt(62)).thenReturn(0, 0, 1); // Intentionally produce "AAB"
+        when(mockRandomProvider.nextInt(62)).thenReturn(0, 0, 1); // Intentionally produce "AAA"
 
         String salt = saltGenerator.generateSalt(3);
         assertNotNull(salt);
@@ -80,7 +77,7 @@ class SaltGeneratorTest {
 
     @Test
     void generateSaltWithConsecutiveCharactersOnlyTwo() throws ConsecutiveCharacterException, InvalidLengthException, DuplicateSaltException, RepeatedCharacterException {
-        when(mockRandomProvider.nextInt(62)).thenReturn(0, 1, 3); // Intentionally produce "ABD"
+        when(mockRandomProvider.nextInt(62)).thenReturn(0, 1, 3); // Intentionally produce "AAA"
 
         String salt = saltGenerator.generateSalt(3);
         assertNotNull(salt);
@@ -108,8 +105,8 @@ class SaltGeneratorTest {
     @Test
     void generateDifferentSalts() throws Exception {
         when(mockRandomProvider.nextInt(62))
-                .thenReturn(0, 3, 5, 22, 18, 10, 25, 9)  // First salt
-                .thenReturn(1, 4, 6, 23, 19, 11, 26, 8);  // Second salt
+                .thenReturn(0, 3, 5, 22, 18, 10, 25, 9)  // First salt "AdFmwKjJ"
+                .thenReturn(1, 4, 6, 23, 19, 11, 26, 8);  // Second salt "BeGnxLkI"
 
         String salt1 = saltGenerator.generateSalt(8);
         String salt2 = saltGenerator.generateSalt(8);
