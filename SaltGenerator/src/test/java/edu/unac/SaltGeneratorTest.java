@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import static org.mockito.Mockito.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class SaltGeneratorTest {
@@ -25,13 +24,19 @@ class SaltGeneratorTest {
     }
 
     @Test
+    void testObviousFailure() {
+        // Este test fallará siempre
+        fail("Este es un fallo intencional para probar Jenkins");
+    }
+
+    @Test
     void generateSaltWithValidLength() throws Exception {
         when(mockRandomProvider.nextInt(62)).thenReturn(0, 3, 5, 22, 18, 10, 25, 9);
 
         String salt = saltGenerator.generateSalt(8);
         assertNotNull(salt);
         assertEquals(8, salt.length());
-        assertEquals("ADFWSKZJ", salt); // Based on mapped CHARACTERS indexes
+        assertEquals("ADFWSKZJ", salt); 
     }
 
     @Test
@@ -56,7 +61,7 @@ class SaltGeneratorTest {
 
     @Test
     void generateSaltWithRepeatedCharactersOnlyTwo() throws ConsecutiveCharacterException, InvalidLengthException, DuplicateSaltException, RepeatedCharacterException {
-        when(mockRandomProvider.nextInt(62)).thenReturn(0, 0, 1); // Intentionally produce "AAA"
+        when(mockRandomProvider.nextInt(62)).thenReturn(0, 0, 1); // Intentionally produce "AAB"
 
         String salt = saltGenerator.generateSalt(3);
         assertNotNull(salt);
@@ -77,7 +82,7 @@ class SaltGeneratorTest {
 
     @Test
     void generateSaltWithConsecutiveCharactersOnlyTwo() throws ConsecutiveCharacterException, InvalidLengthException, DuplicateSaltException, RepeatedCharacterException {
-        when(mockRandomProvider.nextInt(62)).thenReturn(0, 1, 3); // Intentionally produce "AAA"
+        when(mockRandomProvider.nextInt(62)).thenReturn(0, 1, 3); // Intentionally produce "ABD"
 
         String salt = saltGenerator.generateSalt(3);
         assertNotNull(salt);
@@ -105,14 +110,21 @@ class SaltGeneratorTest {
     @Test
     void generateDifferentSalts() throws Exception {
         when(mockRandomProvider.nextInt(62))
-                .thenReturn(0, 3, 5, 22, 18, 10, 25, 9)  // First salt "AdFmwKjJ"
-                .thenReturn(1, 4, 6, 23, 19, 11, 26, 8);  // Second salt "BeGnxLkI"
+                .thenReturn(0, 3, 5, 22, 18, 10, 25, 9)  // First salt
+                .thenReturn(1, 4, 6, 23, 19, 11, 26, 8);  // Second salt
 
         String salt1 = saltGenerator.generateSalt(8);
         String salt2 = saltGenerator.generateSalt(8);
 
         assertNotEquals(salt1, salt2);
-        assertEquals("ADFWSK", salt1);
+        assertEquals("ADFWSKZJ", salt1);
         assertEquals("BEGXTLaI", salt2);
+    }
+
+    @Test
+    void testIntencionadamenteFallido() {
+        String expectedValue = "Este valor esperado";
+        String actualValue = "Un valor diferente";
+        assertEquals(expectedValue, actualValue, "Este test debe fallar - Valores diferentes");
     }
 }
