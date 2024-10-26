@@ -1,7 +1,5 @@
 package edu.unac;
-
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class SimpleRandomProviderTest {
@@ -28,6 +26,9 @@ class SimpleRandomProviderTest {
         int max = 5;
         SimpleRandomProvider randomProvider = new SimpleRandomProvider();
         int result = randomProvider.nextInt(max);
-        assertTrue(result >= 15 && result <= max);
+        // Este test fallará porque verifica que el número esté fuera del rango válido
+        // El método nextInt(5) debe retornar valores entre 0 y 4, pero estamos verificando entre 1 y 5
+        assertTrue(result >= 1 && result <= max, 
+                  "El resultado debería estar entre 1 y " + max + " pero fue: " + result);
     }
 }
