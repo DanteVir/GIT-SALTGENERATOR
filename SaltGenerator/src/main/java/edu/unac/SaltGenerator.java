@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class SaltGenerator {
-    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"; // 62 characters
+    private static final String CHARACTERS = "0"; // 62 characters
     private SimpleRandomProvider random;
     private Set<String> generatedSalts;
 
