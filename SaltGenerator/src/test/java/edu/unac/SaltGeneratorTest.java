@@ -112,7 +112,7 @@ class SaltGeneratorTest {
         String salt2 = saltGenerator.generateSalt(8);
 
         assertNotEquals(salt1, salt2);
-        assertEquals("ADFWSKZJ", salt1);
+        assertEquals("ADFWSK", salt1);
         assertEquals("BEGXTLaI", salt2);
     }
 }
